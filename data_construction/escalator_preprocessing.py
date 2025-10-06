@@ -1,6 +1,12 @@
 import pandas as pd
+# 저장 폴더 설정 (없으면 자동 생성)
+save_dir = "data"
+os.makedirs(save_dir, exist_ok=True)
 
-df_에스컬레이터 = pd.read_csv("/content/drive/MyDrive/project_wisheasy/에스컬레이터_관련/서울교통공사_에스컬레이터.csv")
+# CSV 불러오는 경로 설정
+save_path = os.path.join(save_dir, "서울교통공사_에스컬레이터.csv")
+df_에스컬레이터 = pd.read_csv(save_path)
+
 # 0) 컬럼 표준화(내부에서 쓰기 편하게 리네임)
 df_에스컬레이터 = df_에스컬레이터.rename(columns={
     "역  명": "역명",
@@ -37,14 +43,9 @@ def classify(row: pd.Series) -> str:
 
     return "INTERNAL"
 
+
 df_에스컬레이터["etype"] = df_에스컬레이터.apply(classify, axis=1)
 
-# 저장 폴더 설정 (없으면 자동 생성)
-save_dir = "data"
-os.makedirs(save_dir, exist_ok=True)
-
-# CSV 저장 경로 설정
-save_path = os.path.join(save_dir, "df_에스컬레이터.csv")
-
 # CSV 저장
+save_path = os.path.join(save_dir, "df_에스컬레이터.csv")
 df_에스컬레이터.to_csv(save_path, index=False)
