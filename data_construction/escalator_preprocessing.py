@@ -1,4 +1,5 @@
 import pandas as pd
+
 # 저장 폴더 설정 (없으면 자동 생성)
 save_dir = "data"
 os.makedirs(save_dir, exist_ok=True)
